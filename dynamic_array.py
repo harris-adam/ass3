@@ -36,16 +36,35 @@ class DynamicArray(MutableSequence):
         self._array[index] = value
 
     def __delitem__(self, index):
-        # YOUR CODE HERE
-        pass
+        if index < 0:
+            index += self._length
+        if index < 0 or index >= self._length:
+            raise IndexError("Index out of range")
+        # shift everything after index one slot left
+        for i in range(index, self._length - 1):
+            self._array[i] = self._array[i + 1]
+        self._length -= 1
 
     def insert(self, index, value):
-        # YOUR CODE HERE
-        pass
+        # Like list.insert: out-of-range indices are clamped
+        if index < 0:
+            index = max(0, index + self._length)
+        index = min(index, self._length)
+        if self._length == self._capacity:
+            self._resize()
+        # shift everything from index onward one slot right
+        for i in range(self._length, index, -1):
+            self._array[i] = self._array[i - 1]
+        self._array[index] = value
+        self._length += 1
 
     def _resize(self):
-        # YOUR CODE HERE
-        pass
+        # grow capacity and copy existing elements into the new array
+        self._capacity *= DynamicArray.GROWTH_FACTOR
+        new_array = array('i', [0] * self._capacity)
+        for i in range(self._length):
+            new_array[i] = self._array[i]
+        self._array = new_array
 
     def __repr__(self):
         return "DynamicArray([" + ", ".join(repr(self._array[i]) for i in range(self._length)) + "])"

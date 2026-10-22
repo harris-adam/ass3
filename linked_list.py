@@ -41,12 +41,32 @@ class LinkedList(MutableSequence):
         current.value = value
 
     def __delitem__(self, index):
-        # YOUR CODE HERE
-        pass
+        if index < 0:
+            index += self._length
+        if index < 0 or index >= self._length:
+            raise IndexError("Index out of range")
+        if index == 0:
+            self.head = self.head.next
+        else:
+            prev = self.head
+            for _ in range(index - 1):
+                prev = prev.next
+            prev.next = prev.next.next
+        self._length -= 1
 
     def insert(self, index, value):
-        # YOUR CODE HERE
-        pass
+        # Like list.insert: out-of-range indices are clamped
+        if index < 0:
+            index = max(0, index + self._length)
+        index = min(index, self._length)
+        if index == 0:
+            self.head = LLNode(value, self.head)
+        else:
+            prev = self.head
+            for _ in range(index - 1):
+                prev = prev.next
+            prev.next = LLNode(value, prev.next)
+        self._length += 1
 
     def append(self, value):
         self.insert(self._length, value)
