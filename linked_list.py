@@ -1,6 +1,6 @@
 # linked_list.py
 # A singlely linked list with a tracked head
-# Modified by: 
+# Modified by: Harris Adam
 
 from collections.abc import MutableSequence
 
