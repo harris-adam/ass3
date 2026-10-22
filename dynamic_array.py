@@ -1,6 +1,7 @@
 # dynamic_array.py
 # A dynamic array using Python's array module
-# Modified by: 
+# Modified by: Harris Adam
+# Source: CSC tutor, Google
 
 from array import array
 from collections.abc import MutableSequence
